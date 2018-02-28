@@ -1,0 +1,11 @@
+TODO:
+kag mod:
+penalize leavers
+authorize tcpr connections
+
+backend:
+support more info about matches
+switch to async instead of multithreaded
+
+web server:
+encrypt rcon passwords
