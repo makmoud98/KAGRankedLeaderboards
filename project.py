@@ -39,7 +39,9 @@ def utility_processor():
         login_session['state'] = ''.join(
             random.choice(string.ascii_uppercase + string.digits)
             for x in xrange(32))
-    return dict(state=login_session['state'], user=user)
+    return dict(state=login_session['state'],
+                user=user,
+                oauth_client_id=CLIENT_ID)
 
 
 @app.route('/login', methods=['POST'])
