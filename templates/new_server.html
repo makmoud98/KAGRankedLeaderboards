@@ -8,8 +8,8 @@
 	<br/>
 	<br/>
 	<div class="table">
-		<table class="table table-hover">
-			<form method="post" action="{{url_for('new_server')}}">
+		<form method="post" action="{{url_for('new_server')}}">
+			<table class="table table-hover">
 				<tr>
 					<td>Host</td>
 					<td>
@@ -25,12 +25,12 @@
 				<tr>
 					<td>RCON Password</td>
 					<td>
-						<input name="losses" type="text" class="form-control">
+						<input name="password" type="text" class="form-control">
 					</td>
 				</tr>
-				<button type="submit" class="btn btn-default">Done</button>
-    		</form>
-		</table>
+			</table>
+			<button type="submit" class="btn btn-default">Add</button>
+    	</form>
 	</div>
 
 </div>

@@ -319,6 +319,7 @@ def new_server():
                             password=request.form['password'])
             session.add(server)
             session.commit()
+            manager.create_server(server)
             flash('You have successfully created a new server')
             return redirect(url_for('admin_panel'))
     else:
@@ -356,6 +357,8 @@ def delete_server(id):
         server = session.query(Server).filter_by(id=id).first()
         if server is None:
             abort(404)
+        session.delete(server)
+        session.commit()
         manager.remove_server(server)
         flash('You have successfully deleted server #%s' % server.id)
         return redirect(url_for('admin_panel'))
