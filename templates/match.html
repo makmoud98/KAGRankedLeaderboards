@@ -1,0 +1,104 @@
+{% extends "header.html" %}
+{% block title %}Match #{{match.id}}{% endblock %}
+{% set active_page = "recent" %}
+{% block content %}
+{{ super() }}
+<div class="container">
+	<h1>Match #{{match.id}}</h1>
+	<img class="match-gif" src="{{ url_for('static', filename='assets/match_gifs/%s.gif' % match.id) }}"/>
+	<h5>Server: {{server.host}}:{{server.port}}</h5>
+	<h3>
+		<span style="color:blue;">{{blue|length}}</span> VS
+		<span style="color:red">{{red|length}}</span>
+	</h3>
+	{% if match.outcome == 0 %}
+	<h4>Winner:
+		<span style="color:blue;">Blue Team</span>
+	</h4>
+	{% else %}
+	<h4>Winner:
+		<span style="color:red;">Red Team</span>
+	</h4>
+	{% endif %}
+	<br/>
+	<h4 style="color:blue;">Blue Team</h4>
+	<h5>
+		{% if match.outcome == 0 %}
+		<span style="color:blue;">   {{match.winner_rank}}</span>
+		{% else %}
+		<span style="color:blue;">   {{match.loser_rank}}</span>
+		{% endif %}
+	</h5>
+	<div class="table">
+		<table class="table table-hover">
+			<tr>
+				<th class="rank" scope="col">RATING</th>
+				<th class="username" scope="col">USERNAME</th>
+				<th class="kills" scope="col">KILLS</th>
+				<th class="deaths" scope="col">DEATHS</th>
+			</tr>
+			{% for player in blue %}
+			<tr>
+				<td>
+					{{ player[0].rank }}
+					{% if match.outcome == 0 %}
+					<span style="color:green;"> + {{match.change}}</span>
+					{% else %}
+					<span> - {{match.change}}</span>
+					{% endif %}
+				</td>
+				<td>
+					<a href = "{{url_for('show_player', username=player[1].username)}}">
+	  					{{ player[1].username }}
+	  				</a>
+	  			</td>
+				<td>{{ player[0].kills }}</td>
+				<td>{{ player[0].deaths }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<h4 style="color:red;">Red Team</h4>
+	<h5>
+		{% if match.outcome == 0 %}
+		<span style="color:red;">   {{match.loser_rank}}</span>
+		{% else %}
+		<span style="color:red;">   {{match.winner_rank}}</span>
+		{% endif %}
+	</h5>
+	<div class="table">
+		<table class="table table-hover">
+			<tr>
+				<th class="rank" scope="col">RATING</th>
+				<th class="username" scope="col">USERNAME</th>
+				<th class="kills" scope="col">KILLS</th>
+				<th class="deaths" scope="col">DEATHS</th>
+			</tr>
+			{% for player in red %}
+			<tr>
+				<td>
+					{{ player[0].rank }}
+					{% if match.outcome == 1 %}
+					<span style="color:green;"> + {{match.change}}</span>
+					{% else %}
+					<span> - {{match.change}}</span>
+					{% endif %}
+				</td>
+				<td>
+					<a href = "{{url_for('show_player', username=player[1].username)}}">
+	  					{{ player[1].username }}
+	  				</a>
+	  			</td>
+				<td>{{ player[0].kills }}</td>
+				<td>{{ player[0].deaths }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	{% if user.admin %}
+	<form method="post" action="{{url_for('delete_match', id=match.id)}}">
+		<button type="submit" class="btn btn-default">Delete</button>
+	</form>
+	{% endif %}
+</div>
+{% endblock %}

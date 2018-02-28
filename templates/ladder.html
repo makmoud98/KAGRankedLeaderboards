@@ -1,0 +1,42 @@
+{% extends "header.html" %}
+{% block title %}Ladder{% endblock %}
+{% set active_page = "ladder" %}
+{% block header %}
+	<link href="{{ url_for('static', filename='css/ladder.css') }}" rel="stylesheet">
+	{{ super() }}
+{% endblock %}
+{% block content %}
+{{ super() }}
+<div class="table-responsive-sm">
+	<table class="table table-striped table-hover">
+		<thead class="thread-dark">
+			<tr>
+				<th class="rank" scope="col">RANK</th>
+				<th class="username" scope="col">USERNAME</th>
+				<th class="rating" scope="col">RATING</th>
+				<th class="wins" scope="col">WINS</th>
+				<th class="losses" scope="col">LOSSES</th>
+				<th class="kills" scope="col">KILLS</th>
+				<th class="deaths" scope="col">DEATHS</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for player in players %}
+		<tr>
+	  		<th class="rank" scope="row">{{ loop.index }}</th>
+	  		<td class="username">
+	  			<a href = "{{url_for('show_player', username=player.username)}}">
+	  				{{ player.username }}
+	  			</a>
+	  		</td>
+	  		<td class="rating">{{ player.rank }}</td>
+	  		<td class="wins">{{ player.wins }}</td>
+	  		<td class="losses">{{ player.losses }}</td>
+	  		<td class="kills">{{ player.kills }}</td>
+	  		<td class="deaths">{{ player.deaths }}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

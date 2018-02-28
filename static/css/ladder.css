@@ -1,0 +1,39 @@
+@media only screen and (max-width : 620px){
+	.kills{
+		display: none;
+	}
+	.deaths{
+		display: none;
+	}
+}
+@media only screen and (max-width : 470px){
+	.wins{
+		display: none;
+	}
+	.losses{
+		display: none;
+	}
+	.kills{
+		display: none;
+	}
+	.deaths{
+		display: none;
+	}
+}
+@media only screen and (max-width : 320px){
+	.rating{
+		display: none;
+	}
+	.wins{
+		display: none;
+	}
+	.losses{
+		display: none;
+	}
+	.kills{
+		display: none;
+	}
+	.deaths{
+		display: none;
+	}
+}

@@ -1,0 +1,70 @@
+{% extends "header.html" %}
+{% block title %}{{player.username}}{% endblock %}
+{% block content %}
+{{ super() }}
+<div class="container">
+	<h1>{{player.username}}</h1>
+	<img src="{{avatar}}"/>
+	<br/>
+	<br/>
+	<div class="table">
+		<table class="table table-hover">
+			{% if edit %}
+			<form method="post" action="{{url_for('edit_player', id=player.id)}}">
+			{% endif %}
+			<tr>
+				<td>Rating</td>
+				{% if edit %}
+				<td><input name="rating" type="text" class="form-control" value="{{ player.rank }}"></td>
+				{% else %}
+				<td>{{ player.rank }}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Wins</td>
+				{% if edit %}
+				<td><input name="wins" type="text" class="form-control" value="{{ player.wins }}"></td>
+				{% else %}
+				<td>{{ player.wins }}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Losses</td>
+				{% if edit %}
+				<td><input name="losses" type="text" class="form-control" value="{{ player.losses }}"></td>
+				{% else %}
+				<td>{{ player.losses }}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Kills</td>
+				{% if edit %}
+				<td><input name="kills" type="text" class="form-control" value="{{ player.kills }}"></td>
+				{% else %}
+				<td>{{ player.kills }}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Deaths</td>
+				{% if edit %}
+				<td><input name="deaths" type="text" class="form-control" value="{{ player.deaths }}"></td>
+				{% else %}
+				<td>{{ player.deaths }}</td>
+				{% endif %}
+			</tr>
+		</table>
+	</div>
+	{% if not edit and user.admin %}
+	<form method="get" action="{{url_for('edit_player', id=player.id)}}">
+		<button type="submit" class="btn btn-default">Edit</button>
+    </form>
+    <br/>
+    <form method="get" action="{{url_for('delete_player', id=player.id)}}">
+		<button type="submit" class="btn btn-default">Delete</button>
+    </form>
+    {% elif edit and user.admin %}
+    	<button type="submit" class="btn btn-default">Done</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
