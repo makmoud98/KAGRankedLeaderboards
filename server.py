@@ -119,14 +119,13 @@ class Server(threading.Thread):
                                 # the tcp client send the
                                 # tcp server the player's current
                                 # rank according to the database
-                                self.write("CBitStream p;p.write_string('%s');\
-                                           p.write_u32(%s);p.write_u32(%s);p.w\
-                                           rite_u32(%s);p.write_u32(%s);p.writ\
-                                           e_u32(%s);getRules().SendCommand(ge\
-                                           tRules().getCommandID('get_rank'),p\
-                                           )" % (player.username, player.rank,
-                                                 player.wins, player.losses,
-                                                 player.kills, player.deaths))
+                                # cant split string into multiple lines
+                                # or it wont compile on the game server
+                                # this line cant follow pep8 guidlines
+                                self.write("CBitStream p;p.write_string('%s');p.write_u32(%s);p.write_u32(%s);p.write_u32(%s);p.write_u32(%s);p.write_u32(%s);getRules().SendCommand(getRules().getCommandID('get_rank'),p)" %
+                                           (player.username, player.rank,
+                                            player.wins, player.losses,
+                                            player.kills, player.deaths))
 
                         elif len(tokens) > 0:
                             # m stands for match,
