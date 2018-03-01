@@ -287,9 +287,12 @@ def delete_match(id):
                     session.delete(player_match)
                 session.delete(match)
                 session.commit()
-                os.remove(os.path.dirname(os.path.realpath(__file__)) +
+                try:
+                    os.remove(os.path.dirname(os.path.realpath(__file__)) +
                           url_for('static',
                           filename='assets/match_gifs/%s.gif' % match.id))
+                except Exception:
+                    print "error deleting match gif %s" % match.id
                 flash('You have successfully deleted match #%s' % match.id)
                 return redirect(url_for('recent_matches'))
         else:
