@@ -90,9 +90,7 @@ class Server(threading.Thread):
                         if len(tokens) == 1:
                             if tokens[0] == 'minimap':
                                 try:
-                                    im = imageio.imread('https://api.kag2d.com\
-                                                        /server/ip/%s/port/\
-                                                        %s/minimap' %
+                                    im = imageio.imread('https://api.kag2d.com/server/ip/%s/port/%s/minimap' %
                                                         self.address)
                                     self.map_data.append(im)
                                 except:
@@ -184,8 +182,7 @@ class Server(threading.Thread):
                                     session.add(player_match)
                                     session.commit()
 
-                                imageio.mimsave('./static/assets/\
-                                                match_gifs/%s.gif' %
+                                imageio.mimsave('./static/assets/match_gifs/%s.gif' %
                                                 str(match.id), self.map_data)
                                 self.map_data = []
 
