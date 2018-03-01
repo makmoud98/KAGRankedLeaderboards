@@ -13,6 +13,7 @@ import string
 import os
 import random
 import json
+import socket
 from flask import make_response, send_from_directory
 import requests
 from server_manager import ServerManager
@@ -319,12 +320,22 @@ def new_server():
         if request.method == 'GET':
             return render_template('new_server.html')
         elif request.method == 'POST':
-            server = Server(host=request.form['host'],
-                            port=int(request.form['port']),
+            try:
+                host = socket.gethostbyname(request.form['host'])
+            except socket.gaierror:
+                flash('You did not enter a valid hostname. Please try again')
+                return redirect(url_for('new_server'))
+            try:
+                port = int(request.form['port'])
+            except ValueError:
+                flash('You did not enter a valid port. Please try again')
+                return redirect(url_for('new_server'))
+            server = Server(host=host,
+                            port=port,
                             password=request.form['password'])
+            manager.create_server(server)
             session.add(server)
             session.commit()
-            manager.create_server(server)
             flash('You have successfully created a new server')
             return redirect(url_for('admin_panel'))
     else:
@@ -338,8 +349,17 @@ def edit_server(id):
         if server is None:
             abort(404)
         if request.method == 'POST':
-            server.host = request.form['host']
-            server.port = int(request.form['port'])
+            try:
+                server.host = socket.gethostbyname(request.form['host'])
+            except socket.gaierror:
+                flash('You did not enter a valid hostname. Please try again')
+                return redirect(url_for('edit_server', id=id))
+            try:
+                server.port = int(request.form['port'])
+            except ValueError:
+                flash('You did not enter a valid port. Please try again')
+                return redirect(url_for('edit_server', id=id))
+
             server.password = request.form['password']
             session.add(server)
             session.commit()

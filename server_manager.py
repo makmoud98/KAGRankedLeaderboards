@@ -30,8 +30,7 @@ class ServerManager:
     def remove_server(self, info):
         for i in range(len(self.servers)):
             server = self.servers[i]
-            host = socket.gethostbyname(str(info.host))
-            if server.address[1] == info.port and server.address[0] == host:
+            if server.address[1] == info.port and server.address[0] == info.host:
                 server.stop()
                 server.end()
                 server.join()
@@ -46,8 +45,7 @@ class ServerManager:
 
     # resolve ip addresses and then check for server with the same ip and port
     def get_server_by_info(self, info):
-        host = socket.gethostbyname(str(info.host))
         for server in self.servers:
-            if server.address[1] == info.port and server.address[0] == host:
+            if server.address[1] == info.port and server.address[0] == info.host:
                 return server
         return None
