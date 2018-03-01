@@ -1,3 +1,5 @@
+# some of the oauth stuff was taken from lesson 4
+# see https://github.com/udacity/ud330/blob/master/Lesson4/step2/project.py
 from flask import Flask, render_template, request, redirect, \
                   jsonify, url_for, flash, abort
 from flask.json import loads
