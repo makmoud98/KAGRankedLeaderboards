@@ -27,8 +27,7 @@ class Server(threading.Thread):
     def __init__(self, info):
         super(Server, self).__init__()
         self.info = info
-        self.address = (socket.gethostbyname(str(self.info.host)),
-                        self.info.port)
+        self.address = (self.info.host, self.info.port)
         self.setName('%s] [%s:%s' %
                      (self.info.id, self.address[0], self.address[1]))
         self.socket = socket.socket()
@@ -181,9 +180,12 @@ class Server(threading.Thread):
                                     session.add(player)
                                     session.add(player_match)
                                     session.commit()
+                                try:
+                                    imageio.mimsave('./static/assets/match_gifs/%s.gif' %
+                                                    str(match.id), self.map_data)
+                                except:
+                                    self.log('couldnt save match gif')
 
-                                imageio.mimsave('./static/assets/match_gifs/%s.gif' %
-                                                str(match.id), self.map_data)
                                 self.map_data = []
 
             except Exception:
